@@ -12,7 +12,7 @@
 	<artifactId>huevos-codorniz</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>huevos-codorniz</name>
-	<description>Demo Consola</description>
+	<description>Proyecto Ingenieria De Software 2</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
