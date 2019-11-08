@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.johnpantoja</groupId>
-	<artifactId>AplicacionWeb1</artifactId>
+	<artifactId>huevos-codorniz</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>AplicacionWeb1</name>
+	<name>huevos-codorniz</name>
 	<description>Demo Consola</description>
 
 	<properties>
