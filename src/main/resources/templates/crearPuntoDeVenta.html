@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="template::head">
+<body class="nav-md">
+
+
+	<div class="container body">
+		<div class="main_container">
+			<header th:replace="template::header"></header>
+
+			<!-- page content -->
+			<div class="right_col" role="main">
+				<div class="">
+					<div class="page-title">
+						<div class="title_left">
+							<h3>Crear Punto De Venta</h3>
+						</div>
+
+
+					</div>
+
+					<div class="clearfix"></div>
+
+
+					<div class="row">
+						<div class="col-md-12 col-sm-12 ">
+							<div class="x_panel">
+								<div class="x_title">
+									<h2>Crear Punto De Venta</h2>
+
+									<div class="clearfix"></div>
+								</div>
+								<div class="x_content">
+									<br />
+
+
+									<div th:if="${message}" th:class="${'alert ' + alertClass}"
+										role="alert">
+										<button type="button" class="close" data-dismiss="alert"
+											aria-label="Close">
+											<span aria-hidden="true">x</span>
+										</button>
+										[[${message}]]
+									</div>
+
+									<form autocomplete="off" th:object="${userForm}"
+										th:action="@{/crearPuntoDeVenta}" method="post">
+
+
+										<div class="form-group row">
+											<label class="col-form-label col-md-3 col-sm-3 label-align"
+												for="first-name">Direccion <span class="required">*</span>
+											</label>
+											<div class="col-md-6 col-sm-6 ">
+												<input type="text" id="address" name="address"
+													class="form-control ">
+											</div>
+										</div>
+
+										<div class="form-group row">
+											<label for="middle-name"
+												class="col-form-label col-md-3 col-sm-3 label-align">Nombre
+												<span class="required">*</span>
+											</label>
+											<div class="col-md-6 col-sm-6 ">
+												<input id="name" class="form-control" type="text"
+													name="name">
+											</div>
+										</div>
+
+
+										<div class="form-group row">
+											<label class="col-form-label col-md-3 col-sm-3 label-align"
+												for="last-name">Latitud <span class="required">*</span>
+											</label>
+											<div class="col-md-6 col-sm-6 ">
+												<input type="text" id="latitude" name="latitude"
+													class="form-control">
+											</div>
+										</div>
+
+
+										<div class="form-group row">
+											<label class="col-form-label col-md-3 col-sm-3 label-align"
+												for="last-name">Longitud <span class="required">*</span>
+											</label>
+											<div class="col-md-6 col-sm-6 ">
+												<input type="text" id="length" name="length"
+													class="form-control">
+											</div>
+										</div>
+
+										<div class="ln_solid"></div>
+										<div class="form-group row">
+											<div class="col-md-6 col-sm-6 offset-md-3">
+
+												<button type="submit" class="btn btn-success">Submit</button>
+												<button class="btn btn-primary" type="reset">Reset</button>
+
+											</div>
+										</div>
+
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+
+
+
+
+				</div>
+			</div>
+			<!-- /page content -->
+
+			<!-- footer content -->
+			<footer th:replace="template::footer"></footer>
+			<!-- /footer content -->
+		</div>
+	</div>
+	<div th:replace="template::scripts"></div>
+
+
+
+</body>
+</html>

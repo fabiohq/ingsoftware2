@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="template::head">
+<body class="nav-md">
+
+
+	<div class="container body">
+		<div class="main_container">
+			<header th:replace="template::header"></header>
+
+			<!-- page content -->
+			<div class="right_col" role="main">
+				<div class="">
+					<div class="page-title">
+						<div class="title_left">
+							<h3>Visita Punto De Ventas</h3>
+						</div>
+
+
+					</div>
+
+					<div class="clearfix"></div>
+
+					<div class="row">
+						<div class="col-md-12 col-sm-12  ">
+							<div class="x_panel">
+								<div class="x_title">
+									<h2>Visita Punto De Ventas</h2>
+
+									<div class="clearfix"></div>
+								</div>
+								<div class="x_content">
+									<br />
+									<div th:if="${message}" th:class="${'alert ' + alertClass}"
+										role="alert">
+										<button type="button" class="close" data-dismiss="alert"
+											aria-label="Close">
+											<span aria-hidden="true">x</span>
+										</button>
+										[[${message}]]
+									</div>
+
+									<table id="userList"
+										class="table table-bordered table-hover table-striped">
+										<thead class="thead-light">
+											<tr>
+
+												<th scope="col">Id</th>
+												<th scope="col">Nombre</th>
+												<th scope="col">Direccion</th>
+												<th scope="col">Acciones</th>
+
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="pointSale: ${pointSaleList}">
+												<td th:text="${pointSale.idPointSale}"></td>
+												<td th:text="${pointSale.name}"></td>
+												<td th:text="${pointSale.address}"></td>
+												<td>
+													<button type="button" class="btn btn-round btn-warning"
+														th:onclick="initMap( [[${pointSale.latitude}]]  , [[${pointSale.length}]])"
+														data-toggle="modal" data-target=".bs-example-modal-lg">Ver
+														Mapa</button>
+
+													<button type="button" class="btn btn-round btn-success"
+														th:onclick="geoFindMe([[${pointSale.idPointSale}]])"
+														data-toggle="modal" data-target=".bs-example-modal-lg2">Registrar
+														Visita</button>
+
+
+												</td>
+											</tr>
+										</tbody>
+									</table>
+
+
+
+
+
+
+									<script>
+										function geoFindMe(idPoint) {
+											var today = new Date();
+											var dd = String(today.getDate())
+													.padStart(2, '0');
+											var mm = String(
+													today.getMonth() + 1)
+													.padStart(2, '0'); //January is 0!
+											var yyyy = today.getFullYear();
+
+											today = mm + '/' + dd + '/' + yyyy;
+											document
+													.getElementById("dateVisit").value = today;
+											console.log('idPoint ' + idPoint);
+											var idPointSaleP = +idPoint;
+											document
+													.getElementById("pointSale").value = idPointSaleP;
+
+											var output = document
+													.getElementById("out");
+
+											if (!navigator.geolocation) {
+												//output.innerHTML = "<p>Geolocation is not supported by your browser</p>";
+												return;
+											}
+
+											function success(position) {
+												var latitude = position.coords.latitude;
+												var longitude = position.coords.longitude;
+
+												document
+														.getElementById("latitude").value = latitude;
+												document
+														.getElementById("length").value = latitude;
+
+											}
+											;
+
+											function error() {
+												//output.innerHTML = "Unable to retrieve your location";
+											}
+											;
+
+											navigator.geolocation
+													.getCurrentPosition(
+															success, error);
+										}
+									</script>
+
+
+
+
+
+									<div class="modal fade bs-example-modal-lg2" tabindex="-1"
+										role="dialog" aria-hidden="true">
+										<div class="modal-dialog modal-lg">
+											<div class="modal-content">
+
+												<div class="modal-header">
+													<h4 class="modal-title" id="myModalLabel">Registrar
+														Visita</h4>
+													<button type="button" class="close" data-dismiss="modal">
+														<span aria-hidden="true">x</span>
+													</button>
+												</div>
+
+												<form autocomplete="off" th:object="${userForm}"
+													th:action="@{/crearVisita}" method="post">
+													<div class="modal-body">
+
+
+														<div class="form-group row" style="display: none">
+															<label
+																class="col-form-label col-md-3 col-sm-3 label-align"
+																for="first-name">idPointSale </label>
+															<div class="col-md-6 col-sm-6 ">
+																<input type="text" id="pointSale" name="pointSale"
+																	class="form-control ">
+															</div>
+														</div>
+
+
+
+														<div class="form-group row">
+															<label
+																class="col-form-label col-md-3 col-sm-3 label-align"
+																for="first-name">Latitud </label>
+															<div class="col-md-6 col-sm-6 ">
+																<input type="text" id="latitude" name="latitude"
+																	class="form-control " readonly="readonly">
+															</div>
+														</div>
+														<div class="form-group row">
+															<label
+																class="col-form-label col-md-3 col-sm-3 label-align"
+																for="first-name">Longitud </label>
+															<div class="col-md-6 col-sm-6 ">
+																<input type="text" id="length" name="length"
+																	class="form-control " readonly="readonly">
+															</div>
+														</div>
+
+
+
+														<div class="form-group row">
+															<label
+																class="col-form-label col-md-3 col-sm-3 label-align"
+																for="first-name">Fecha Visita </label>
+															<div class="col-md-6 col-sm-6 ">
+																<input type="text" id="dateVisit" name="dateVisit"
+																	readonly="readonly" class="form-control ">
+															</div>
+														</div>
+
+
+														<div class="form-group row">
+															<label
+																class="col-form-label col-md-3 col-sm-3 label-align"
+																for="first-name">Observacion <span
+																class="required">*</span>
+															</label>
+															<div class="col-md-6 col-sm-6 ">
+																<input type="text" id="observations" name="observations"
+																	class="form-control ">
+															</div>
+														</div>
+
+
+													</div>
+													<div class="modal-footer">
+
+														<button type="submit" class="btn btn-success">Guardar</button>
+														<button type="button" class="btn btn-secondary"
+															data-dismiss="modal">Close</button>
+													</div>
+
+												</form>
+
+
+											</div>
+										</div>
+									</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+									<div class="modal fade bs-example-modal-lg" tabindex="-1"
+										role="dialog" aria-hidden="true">
+										<div class="modal-dialog modal-lg">
+											<div class="modal-content">
+
+												<div class="modal-header">
+													<h4 class="modal-title" id="myModalLabel">Mapa</h4>
+													<button type="button" class="close" data-dismiss="modal">
+														<span aria-hidden="true">x</span>
+													</button>
+												</div>
+
+												<script th:inline="javascript">
+													function initMap(parLat,
+															parLng) {
+														console.log('initMap'
+																+ parLat);
+														if (!isNaN(parseFloat(parLat))) {
+															console
+																	.log('Entro initMap'
+																			+ parLat);
+
+															// The location of Uluru
+															var uluru = {
+																lat : +parseFloat(parLat),
+																lng : +parseFloat(parLng)
+															};
+															// The map, centered at Uluru
+															var map = new google.maps.Map(
+																	document
+																			.getElementById('map'),
+																	{
+																		zoom : 16,
+																		center : uluru
+																	});
+															// The marker, positioned at Uluru
+															var marker = new google.maps.Marker(
+																	{
+																		position : uluru,
+																		map : map
+																	});
+
+														}
+
+													}
+												</script>
+												<script th:inline="javascript" async="async" defer="defer"
+													src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB972wkZzvJsvwQ8VnG6zOvcc2NGyko3zE&callback=initMap"></script>
+
+
+												<div id="map" style="height: 400px" class="modal-body">
+
+													<div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-secondary"
+														data-dismiss="modal">Close</button>
+
+												</div>
+
+											</div>
+										</div>
+									</div>
+
+
+
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /page content -->
+
+			<!-- footer content -->
+			<footer th:replace="template::footer"></footer>
+			<!-- /footer content -->
+		</div>
+	</div>
+	<div th:replace="template::scripts"></div>
+
+
+
+</body>
+</html>

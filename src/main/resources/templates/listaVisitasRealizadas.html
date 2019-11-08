@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="template::head">
+<body class="nav-md">
+
+
+	<div class="container body">
+		<div class="main_container">
+			<header th:replace="template::header"></header>
+
+			<!-- page content -->
+			<div class="right_col" role="main">
+				<div class="">
+					<div class="page-title">
+						<div class="title_left">
+							<h3>Visitas Realizadas</h3>
+						</div>
+
+
+
+					</div>
+
+					<div class="clearfix"></div>
+
+					<div class="row">
+						<div class="col-md-12 col-sm-12  ">
+							<div class="x_panel">
+								<div class="x_title">
+									<h2>Visitas Realizadas</h2>
+
+									<div class="clearfix"></div>
+								</div>
+								<div class="x_content">
+
+
+									<div class="table-responsive">
+										<table id="userList"
+											class="table table-striped jambo_table bulk_action">
+											<thead class="thead-light">
+												<tr class="headings">
+
+													<th class="column-title">Id</th>
+													<th class="column-title">Punto De Venta</th>
+													<th class="column-title">Fecha Visita</th>
+													<th class="column-title">Mercaderista</th>
+													<th class="column-title">Observaciones</th>
+
+												</tr>
+											</thead>
+											<tbody>
+												<tr class="even pointer" th:each="visit: ${visitList}">
+													<td th:text="${visit.idVisit}"></td>
+													<td th:text="${visit.pointSale.name}"></td>
+													<td th:text="${visit.dateVisitString}"></td>
+													<td
+														th:text="${visit.user.firstName + ' ' +visit.user.lastName } "></td>
+													<td th:text="${visit.observations}"></td>
+												</tr>
+											</tbody>
+										</table>
+
+									</div>
+
+
+
+
+
+
+
+
+
+
+
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="clearfix"></div>
+
+					<div class="row">
+						<div class="col-md-12 col-sm-12  ">
+							<div class="x_panel">
+								<div class="x_title">
+									<h2>Puntos De Venta</h2>
+
+									<div class="clearfix"></div>
+								</div>
+								<div class="x_content">
+
+
+									<div class="table-responsive">
+										<table id="userList"
+											class="table table-striped jambo_table bulk_action">
+											<thead class="thead-light">
+												<tr class="headings">
+
+													<th class="column-title">Id</th>
+													<th class="column-title">Nombre</th>
+													<th class="column-title">Direccion</th>
+
+
+													<th class="column-title">Registro Visitas</th>
+
+												</tr>
+											</thead>
+											<tbody>
+												<tr class="even pointer"
+													th:each="pointSale : ${pointSaleList}">
+													<td th:text="${pointSale.name}"></td>
+													<td th:text="${pointSale.idPointSale}">
+													<td th:text="${pointSale.address}"></td>
+													<td>
+
+														<table id="userList"
+															class="table table-striped jambo_table bulk_action">
+
+															<thead class="thead-light">
+																<tr class="headings">
+
+																	<th class="column-title">Punto De Venta</th>
+																	<th class="column-title">Fecha Visita</th>
+																	<th class="column-title">Mercaderista</th>
+																	<th class="column-title">Observaciones</th>
+
+
+																</tr>
+															</thead>
+															<tbody>
+																<tr class="even pointer"
+																	th:each="visit : ${pointSale.visits}">
+																	<td th:text="${visit.pointSale.name}"></td>
+																	<td th:text="${visit.dateVisitString}"></td>
+																	<td
+																		th:text="${visit.user.firstName + ' ' +visit.user.lastName } "></td>
+																	<td th:text="${visit.observations}"></td>
+
+																</tr>
+															</tbody>
+
+														</table>
+
+
+
+
+													</td>
+
+
+
+												</tr>
+											</tbody>
+										</table>
+
+									</div>
+
+
+
+
+
+
+
+
+
+
+
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+
+
+
+
+				</div>
+			</div>
+			<!-- /page content -->
+
+			<!-- footer content -->
+			<footer th:replace="template::footer"></footer>
+			<!-- /footer content -->
+		</div>
+	</div>
+	<div th:replace="template::scripts"></div>
+
+
+
+</body>
+</html>

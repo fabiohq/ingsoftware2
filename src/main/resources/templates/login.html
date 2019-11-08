@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- Meta, title, CSS, favicons, etc. -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>HDC S.A</title>
+
+<!-- Bootstrap -->
+<link href="tema/vendors/bootstrap/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<!-- Font Awesome -->
+<link href="tema/vendors/font-awesome/css/font-awesome.min.css"
+	rel="stylesheet">
+<!-- NProgress -->
+<link href="tema/vendors/nprogress/nprogress.css" rel="stylesheet">
+<!-- Animate.css -->
+<link href="tema/vendors/animate.css/animate.min.css" rel="stylesheet">
+
+
+<!-- PNotify -->
+<link href="tema/vendors/pnotify/dist/pnotify.css" rel="stylesheet">
+<link href="tema/vendors/pnotify/dist/pnotify.buttons.css"
+	rel="stylesheet">
+<link href="tema/vendors/pnotify/dist/pnotify.nonblock.css"
+	rel="stylesheet">
+
+<!-- Custom Theme Style -->
+<link href="tema/build/css/custom.min.css" rel="stylesheet">
+</head>
+
+<body class="login">
+	<div>
+		<a class="hiddenanchor" id="signup"></a> <a class="hiddenanchor"
+			id="signin"></a>
+
+		<div class="login_wrapper">
+			<div class="animate form login_form">
+				<section class="login_content">
+					<form th:action="@{/login}" method="post">
+						<h1>Iniciar sesión</h1>
+						<div>
+							<input type="text" class="form-control" name="username"
+								placeholder="Usuario" required="required" />
+						</div>
+						<div>
+							<input type="password" class="form-control" name="password"
+								placeholder="Contraseña" required="required" />
+						</div>
+						<div>
+
+
+
+
+
+
+							<button type="submit" class="btn btn-round btn-secondary">
+								<i class="fas fa-sign-in-alt"></i> Ingresar
+							</button>
+
+						</div>
+
+</form>
+
+						<div th:if="${param.error}"
+							class="alert alert-danger alert-dismissible " role="alert">
+							<button type="button" class="close" data-dismiss="alert"
+								aria-label="Close">
+								<span aria-hidden="true">x</span>
+							</button>
+
+							Usuario o contraseña invalido.
+						</div>
+						<div th:if="${param.logout}"
+							class="alert alert-success alert-dismissible " role="alert">
+							<button type="button" class="close" data-dismiss="alert"
+								aria-label="Close">
+								<span aria-hidden="true">x</span>
+							</button>
+
+							Has sido desconectado.
+						</div>
+						<div class="clearfix"></div>
+
+						<div class="separator">
+
+							<div class="clearfix"></div>
+							<br />
+
+							<div>
+
+								<p>©2019 Todos los derechos reservados. HDC - Huevos De
+									Codorniz S.A.</p>
+							</div>
+						</div>
+				</section>
+			</div>
+
+
+		</div>
+	</div>
+<!-- jQuery -->
+		<script src="tema/vendors/jquery/dist/jquery.min.js"></script>
+		<!-- Bootstrap -->
+		<script src="tema/vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+		<!-- FastClick -->
+		<script src="tema/vendors/fastclick/lib/fastclick.js"></script>
+		<!-- NProgress -->
+		<script src="tema/vendors/nprogress/nprogress.js"></script>
+
+		<!-- bootstrap-progressbar -->
+		<script
+			src="tema/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+		<!-- iCheck -->
+		<script src="tema/vendors/iCheck/icheck.min.js"></script>
+
+		<!-- PNotify -->
+		<script src="tema/vendors/pnotify/dist/pnotify.js"></script>
+		<script src="tema/vendors/pnotify/dist/pnotify.buttons.js"></script>
+
+		<script src="tema/vendors/pnotify/dist/pnotify.nonblock.js"></script>
+
+		<!-- Custom Theme Scripts -->
+		<script src="tema/build/js/custom.min.js"></script>
+</body>
+</html>
