@@ -1,12 +1,5 @@
 package com.johnpantoja.controller;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,10 +30,14 @@ public class InicioController {
 	@Autowired
 	UserService userService;
 
-	@GetMapping(value = { "", "/", "login" })
+	
+	
+
+
+	@GetMapping(value = { "", "/", "login" , "login.html"})
 	public String inicio() {
 
-		return "login";
+		return "login.html";
 	}
 
 	@GetMapping("/listaPuntosDeVenta")

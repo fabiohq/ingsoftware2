@@ -1,10 +1,9 @@
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="template::head">
 <body class="nav-md">
-
-
 	<div class="container body">
 		<div class="main_container">
 			<header th:replace="template::header"></header>
@@ -43,28 +42,16 @@
 										</button>
 										[[${message}]]
 									</div>
-
+								
 									<form autocomplete="off" th:object="${userForm}"
 										th:action="@{/crearPuntoDeVenta}" method="post">
-
-
-										<div class="form-group row">
-											<label class="col-form-label col-md-3 col-sm-3 label-align"
-												for="first-name">Direccion <span class="required">*</span>
-											</label>
-											<div class="col-md-6 col-sm-6 ">
-												<input type="text" id="address" name="address"
-													class="form-control ">
-											</div>
-										</div>
-
 										<div class="form-group row">
 											<label for="middle-name"
 												class="col-form-label col-md-3 col-sm-3 label-align">Nombre
 												<span class="required">*</span>
 											</label>
 											<div class="col-md-6 col-sm-6 ">
-												<input id="name" class="form-control" type="text"
+												<input id="name" class="form-control" type="text" required="required"
 													name="name">
 											</div>
 										</div>
@@ -72,11 +59,31 @@
 
 										<div class="form-group row">
 											<label class="col-form-label col-md-3 col-sm-3 label-align"
+												for="first-name">Direccion <span class="required">*</span>
+											</label>
+											<div class="col-md-4 col-sm-3 ">
+												<input type="text" id="address" name="address" required="required"
+													readonly="readonly" class="form-control ">
+											</div>
+
+											<div class="col-md-2 col-sm-3 ">
+												<button type="button" class="btn btn-round btn-warning"
+													data-toggle="modal" data-target=".bs-example-modal-lg">Seleccionar...</button>
+
+											</div>
+
+
+										</div>
+
+
+
+										<div class="form-group row">
+											<label class="col-form-label col-md-3 col-sm-3 label-align"
 												for="last-name">Latitud <span class="required">*</span>
 											</label>
 											<div class="col-md-6 col-sm-6 ">
-												<input type="text" id="latitude" name="latitude"
-													class="form-control">
+												<input type="text" id="latitude" name="latitude" required="required"
+													readonly="readonly" class="form-control">
 											</div>
 										</div>
 
@@ -86,8 +93,8 @@
 												for="last-name">Longitud <span class="required">*</span>
 											</label>
 											<div class="col-md-6 col-sm-6 ">
-												<input type="text" id="length" name="length"
-													class="form-control">
+												<input type="text" id="length" name="length" required="required"
+													readonly="readonly" class="form-control">
 											</div>
 										</div>
 
@@ -95,13 +102,132 @@
 										<div class="form-group row">
 											<div class="col-md-6 col-sm-6 offset-md-3">
 
-												<button type="submit" class="btn btn-success">Submit</button>
-												<button class="btn btn-primary" type="reset">Reset</button>
+												<button type="submit" class="btn btn-success">Guardar</button>
+												<button class="btn btn-primary" type="reset">Limpiar</button>
 
 											</div>
 										</div>
 
 									</form>
+									
+									
+										<div class="modal fade bs-example-modal-lg" tabindex="-1"
+										role="dialog" aria-hidden="true">
+										<div class="modal-dialog modal-lg">
+											<div class="modal-content">
+
+												<div class="modal-header">
+													<h4 class="modal-title" id="myModalLabel">Mapa</h4>
+													<button type="button" class="close" data-dismiss="modal">
+														<span aria-hidden="true">x</span>
+													</button>
+												</div>
+
+
+
+
+												<form id="location-form">
+													<div class="modal-body">
+
+
+
+
+														<div class="form-group row">
+															<label
+																class="col-form-label col-md-3 col-sm-3 label-align"
+																for="first-name">Ingrese Direccion <span
+																class="required">*</span>
+															</label>
+															<div class="col-md-6 col-sm-6 ">
+																<input type="text" id="location-input"
+																	name="location-input" class="form-control ">
+															</div>
+														</div>
+
+
+													</div>
+													<div class="modal-footer">
+
+														<button th:onclick="getLocation()" type="submit"
+															class="btn btn-success">Consultar</button>
+														<button type="button" class="btn btn-secondary"
+															data-dismiss="modal">Limpiar</button>
+													</div>
+												</form>
+												<script th:inline="javascript">		
+												function limpiar(){
+												    document.getElementById('location-input').value='';
+													document.getElementById("latitude").value = '';
+										         	document.getElementById("length").value = '';
+										        	document.getElementById("address").value = '';
+												}
+												
+												
+												function getLocation(){
+													 var locationForm = document.getElementById('location-form');											
+												    locationForm.addEventListener('submit', geocode);
+												    function geocode(e){											
+												      e.preventDefault();
+												      var location = document.getElementById('location-input').value;
+												      axios.get('https://maps.googleapis.com/maps/api/geocode/json',{
+												        params:{
+												          address:location,
+												          key:'AIzaSyB972wkZzvJsvwQ8VnG6zOvcc2NGyko3zE'
+												        }
+												      })
+												      .then(function(response){     
+													    console.log(response);         
+												        var lat = response.data.results[0].geometry.location.lat;
+												        var lng = response.data.results[0].geometry.location.lng;	
+														document.getElementById("latitude").value = lat;
+											         	document.getElementById("length").value = lng;
+											        	document.getElementById("address").value = location;	
+														initMap(lat,	lng);														
+														})
+												      .catch(function(error){
+												        console.log(error);
+												      });
+												    }											
+												}
+												function initMap(parLat,
+															parLng) {											
+														if (!isNaN(parseFloat(parLat))) {
+															var uluru = {
+																lat : +parseFloat(parLat),	lng : +parseFloat(parLng)
+															};
+														
+															var map = new google.maps.Map(
+																	document.getElementById('map'),
+																	{
+																		zoom : 16,center : uluru
+																	});													
+															var marker = new google.maps.Marker(
+																	{
+																		position : uluru,
+																		map : map
+																	});
+														}
+
+													}
+												</script>
+												<script th:inline="javascript" async="async" defer="defer"
+													src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB972wkZzvJsvwQ8VnG6zOvcc2NGyko3zE&callback=initMap"></script>
+
+
+												<div id="map" style="height: 400px" class="modal-body">
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-secondary"
+														data-dismiss="modal">Close</button>
+												</div>
+											</div>
+										</div>
+									</div>
+									
+									
+									
+									
+									
 								</div>
 							</div>
 						</div>

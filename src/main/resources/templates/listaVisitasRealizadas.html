@@ -91,7 +91,7 @@
 								<div class="x_content">
 
 
-									<div class="table-responsive">
+									<div class="table-responsive" >
 										<table id="userList"
 											class="table table-striped jambo_table bulk_action">
 											<thead class="thead-light">
@@ -108,9 +108,13 @@
 											</thead>
 											<tbody>
 												<tr class="even pointer"
-													th:each="pointSale : ${pointSaleList}">
-													<td th:text="${pointSale.name}"></td>
+													th:each="pointSale : ${pointSaleList}"
+												
+													th:style="${pointSale.visits.size()} >= 1 ? 'background: #00800078' : 'background: #f44336ad'">
+													
 													<td th:text="${pointSale.idPointSale}">
+													<td th:text="${pointSale.name}"></td>
+
 													<td th:text="${pointSale.address}"></td>
 													<td>
 
@@ -120,7 +124,7 @@
 															<thead class="thead-light">
 																<tr class="headings">
 
-																	<th class="column-title">Punto De Venta</th>
+
 																	<th class="column-title">Fecha Visita</th>
 																	<th class="column-title">Mercaderista</th>
 																	<th class="column-title">Observaciones</th>
@@ -131,7 +135,7 @@
 															<tbody>
 																<tr class="even pointer"
 																	th:each="visit : ${pointSale.visits}">
-																	<td th:text="${visit.pointSale.name}"></td>
+
 																	<td th:text="${visit.dateVisitString}"></td>
 																	<td
 																		th:text="${visit.user.firstName + ' ' +visit.user.lastName } "></td>
